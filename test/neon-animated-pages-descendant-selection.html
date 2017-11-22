@@ -18,10 +18,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="../../web-component-tester/browser.js"></script>
 <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
-<link rel="import" href="../web-animations.html">
+<script type="module" src="../web-animations.js"></script>
 <link rel="import" href="../../test-fixture/test-fixture.html">
-<link rel="import" href="../neon-animated-pages.html">
-<link rel="import" href="../neon-animation-behavior.html">
+<script type="module" src="../neon-animated-pages.js"></script>
+<script type="module" src="../neon-animation-behavior.js"></script>
 <link rel="import" href="../../iron-selector/iron-selector.html">
 
 </head>
@@ -67,20 +67,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 </dom-module>
 
-<script>
-  window.addEventListener('WebComponentsReady', function() {
-    Polymer({ is: 'x-selecting-element' });
-    Polymer({ is: 'test-element' });
-    Polymer({
-      is: 'test-animation',
-      behaviors: [
-        Polymer.NeonAnimationBehavior
-      ],
-      configure: function(config) {
-        config.node.animated = true;
-      }
-    });
-  });
+<script type="module">
+import '../web-animations.js';
+import '../neon-animated-pages.js';
+import '../neon-animation-behavior.js';
+Polymer({ is: 'x-selecting-element' });
+Polymer({ is: 'test-element' });
+Polymer({
+  is: 'test-animation',
+  behaviors: [
+    Polymer.NeonAnimationBehavior
+  ],
+  configure: function(config) {
+    config.node.animated = true;
+  }
+});
 </script>
 
 <test-fixture id="distributed-children">
@@ -92,7 +93,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 </test-fixture>
 
-<script>
+<script type="module">
+import '../web-animations.js';
+import '../neon-animated-pages.js';
+import '../neon-animation-behavior.js';
 suite('descendant selection', function() {
   test('descendents of other selectors are not animated', function() {
     var animatedPages = fixture('descendant-selection');
