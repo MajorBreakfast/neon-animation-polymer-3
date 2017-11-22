@@ -1,3 +1,37 @@
+## Polymer 3.0 compatibility
+
+Neon animation has been deprecated. Nevertheless, a few first-party Polymer elements like `<iron-dropdown>` and `<paper-menu-button>` still use it. Unfortunately there is no official `@Polymer/neon-animation` package for Polymer 3.0. This package is a bandaid that fixes this problem. However, you need webpack to wire it up.
+
+Install via `yarn add neon-animation-polymer-3 web-animations-js`.
+
+Import the web animations polyfill in your `index.html`:
+```HTML
+<script src="./node_modules/web-animations-js/web-animations-next.min.js"></script>
+```
+
+Modify `webpack.config.js` to remap all imports for neon animation to this package:
+```JS
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+module.exports = {
+  /* ... other webpack configuration */
+  resolve: {
+    alias: {
+      '../neon-animation': 'neon-animation-polymer-3'
+    }
+  },
+  plugins: [
+    new CopyWebpackPlugin([{
+      from: path.resolve(__dirname, './node_modules/web-animations-js/*{.js,.js.map}'),
+      to: './node_modules/web-animations-js/[name].[ext]'
+    }])
+  ]
+}
+```
+
+The following is neon animation's original package description:
+
 ## Changes in 2.0
 * ⚠️ This Element is now deprecated ⚠️
   * Please use the web animations api or CSS animations
